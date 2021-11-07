@@ -39,7 +39,15 @@ function setup() {
 Apply Kangaroo_running and kangaroo_collided animation to it. Scale the kangaroo if required.
 Set the collider of the kangaroo as a circle and the radius of the collider as 300
 */
+  kangaroo = createSprite(50,200,20,50);
+  kangaroo.addAnimation("running", kangaroo_running);
+  kangaroo.addAnimation("collided", kangaroo_collided);
+  kangaroo.scale = 0.15;
+  kangaroo.setCollider("circle",0,0,300)
+  kangaroo.debug=true;
 //Create a sprite for Invisible ground and place it at the bottom side of the screen.
+  invisibleGround = createSprite(400,350,1600,10);
+  invisibleGround.visible = false;
   
   shrubsGroup = new Group();
   obstaclesGroup = new Group();
@@ -51,7 +59,9 @@ Set the collider of the kangaroo as a circle and the radius of the collider as 3
 function draw() {
   background(255);
   
-//In function draw(), Set the x-Position of the kangaroo according to the camera    
+//In function draw(), Set the x-Position of the kangaroo according to the camera
+  kangaroo.x=camera.position.x-270;
+  
   if (gameState===PLAY){
 
     jungle.velocityX=-3
@@ -108,6 +118,8 @@ function spawnShrubs() {
   if (frameCount % 150 === 0) {
 
 //Set the x-position of the shrub according to the game camera.
+    var shrub = createSprite(camera.position.x+500,330,40,10);
+    
     shrub.velocityX = -(6 + 3*score/100)
     shrub.scale = 0.6;
 
